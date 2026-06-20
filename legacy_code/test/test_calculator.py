@@ -39,6 +39,7 @@ EXPECTED_RESPONSES = {
     },
 }
 
+
 @pytest.mark.api
 @pytest.mark.withoutresponses
 @pytest.mark.parametrize("order_id, expected_value", EXPECTED_VALUES)
@@ -47,6 +48,7 @@ def test_e2e(order_id, expected_value):
     returned_value = calculator.calculate_shipping(order_id)
     assert returned_value == expected_value
 
+
 @pytest.mark.api
 @pytest.mark.withoutresponses
 @pytest.mark.parametrize("order_id", (1001, 1002, 1003, 1004))
@@ -54,6 +56,7 @@ def test_get_order_data(order_id):
     expected_response = EXPECTED_RESPONSES[order_id]
     data = get_order_data(order_id)
     assert data == expected_response
+
 
 @pytest.mark.parametrize("order_id, expected_value", EXPECTED_VALUES)
 def test_get_order_data_without_request(responses, order_id, expected_value):
