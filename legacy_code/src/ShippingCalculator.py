@@ -11,16 +11,20 @@ class Order:
     fragile: bool
 
 
+def get_order_data(order_id: int) -> dict:
+    url = f"https://codemanship.co.uk/api/orders.php?orderId={order_id}"
+
+    response = requests.get(url)
+    response.raise_for_status()
+
+    return response.json()
+
+
 class ShippingCalculator:
 
     def calculate_shipping(self, order_id: int) -> float:
         try:
-            url = f"https://codemanship.co.uk/api/orders.php?orderId={order_id}"
-
-            response = requests.get(url)
-            response.raise_for_status()
-
-            data = response.json()
+            data = get_order_data(order_id)
 
             order = Order(
                 orderId=data["orderId"],
