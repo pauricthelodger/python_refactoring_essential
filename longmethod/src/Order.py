@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Literal
 
 
 @dataclass(frozen=True)
@@ -30,27 +30,42 @@ class Order:
         self.customer = customer
 
     def summarise(self) -> OrderSummary:
-        # Validation
-        if self.items is None:
-            raise ValueError("Items cannot be None")
-        if len(self.items) == 0:
-            raise ValueError("Order must contain items")
+        self.validate_items()
 
-        # Subtotal calculation
-        subtotal = sum(item.price * item.quantity for item in self.items)
+        subtotal = self.calculate_subtotal()
 
-        # Discount rules
+        discount = self.calculate_discount(subtotal)
+
+        tax, taxable_amount = self.calculate_tax(discount, subtotal)
+
+        total = self.calculate_total(tax, taxable_amount)
+
+        return OrderSummary(subtotal, discount, tax, total)
+
+    @staticmethod
+    def calculate_total(tax: float, taxable_amount: float) -> float:
+        total = taxable_amount + tax
+        return total
+
+    @staticmethod
+    def calculate_tax(discount: float, subtotal: float | Literal[0]) -> tuple[float, float]:
+        taxable_amount = subtotal - discount
+        tax = taxable_amount * 0.20
+        return tax, taxable_amount
+
+    def calculate_discount(self, subtotal: float | Literal[0]) -> float:
         discount = 0.0
         if self.customer.is_loyal():
             discount = subtotal * 0.10
         elif subtotal > 100:
             discount = subtotal * 0.05
+        return discount
 
-        # Tax calculation
-        taxable_amount = subtotal - discount
-        tax = taxable_amount * 0.20
+    def calculate_subtotal(self) -> float | Literal[0]:
+        return sum(item.price * item.quantity for item in self.items)
 
-        # Total calculation
-        total = taxable_amount + tax
-
-        return OrderSummary(subtotal, discount, tax, total)
+    def validate_items(self):
+        if self.items is None:
+            raise ValueError("Items cannot be None")
+        if len(self.items) == 0:
+            raise ValueError("Order must contain items")
