@@ -6,6 +6,7 @@ EXPECTED_VALUES = (
     (1001, 2.5),
     (1002, 36.8),
     (1003, 27.4),
+    (1004, 3.0),
 )
 
 EXPECTED_RESPONSES = {

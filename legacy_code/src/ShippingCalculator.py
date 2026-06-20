@@ -43,6 +43,9 @@ class ShippingCalculator:
             elif order.shippingType == "OVERNIGHT":
                 return order.weightKg * 1.2 + 25
 
+            elif order.shippingType == "INTERNATIONAL":
+                return order.weightKg * 1.5
+
             else:
                 raise RuntimeError(f"Unknown shipping type: {order.shippingType}")
 
