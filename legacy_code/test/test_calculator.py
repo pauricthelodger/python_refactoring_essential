@@ -1,3 +1,5 @@
+import pytest
+
 from legacy_code.src.ShippingCalculator import ShippingCalculator
 
 EXPECTED_VALUES = (
@@ -6,8 +8,8 @@ EXPECTED_VALUES = (
     (1003, 27.4),
 )
 
-def test_e2e():
+@pytest.mark.parametrize("order_id, expected_value", EXPECTED_VALUES)
+def test_e2e(order_id, expected_value):
     calculator = ShippingCalculator()
-    for order_id, expected_value in EXPECTED_VALUES:
-        returned_value = calculator.calculate_shipping(order_id)
-        assert returned_value == expected_value
+    returned_value = calculator.calculate_shipping(order_id)
+    assert returned_value == expected_value
