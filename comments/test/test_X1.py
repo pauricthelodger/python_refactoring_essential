@@ -6,9 +6,9 @@ from comments.src.X1 import X1
 class TestX1(unittest.TestCase):
 
     def test_n_basic(self):
-        self.assertEqual(X1.n(0), 0)
-        self.assertEqual(X1.n(2), 4)
-        self.assertEqual(X1.n(-3), 9)
+        self.assertEqual(X1.square(0), 0)
+        self.assertEqual(X1.square(2), 4)
+        self.assertEqual(X1.square(-3), 9)
 
     def test_m_single_value(self):
         self.assertEqual(X1.sum_of_squares(3, 3), 9)
