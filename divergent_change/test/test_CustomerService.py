@@ -1,37 +1,41 @@
 import unittest
 
-from divergent_change.src.CustomerService import CustomerService
+from divergent_change.src.CustomerService import (
+    CustomerService,
+    EmailValidator,
+)
 
 
 class TestCustomerService(unittest.TestCase):
 
     def setUp(self):
         self.service = CustomerService()
+        self.email_validator = EmailValidator()
 
     # -------------------------
     # is_valid_email tests
     # -------------------------
 
     def test_is_valid_email_returns_false_when_email_is_none(self):
-        self.assertFalse(self.service.is_valid_email(None))
+        self.assertFalse(self.email_validator.is_valid_email(None))
 
     def test_is_valid_email_returns_false_when_email_is_empty(self):
-        self.assertFalse(self.service.is_valid_email(""))
+        self.assertFalse(self.email_validator.is_valid_email(""))
 
     def test_is_valid_email_returns_false_when_missing_at_symbol(self):
-        self.assertFalse(self.service.is_valid_email("invalid.email.com"))
+        self.assertFalse(self.email_validator.is_valid_email("invalid.email.com"))
 
     def test_is_valid_email_returns_false_when_missing_local_part(self):
-        self.assertFalse(self.service.is_valid_email("@domain.com"))
+        self.assertFalse(self.email_validator.is_valid_email("@domain.com"))
 
     def test_is_valid_email_returns_false_when_missing_domain(self):
-        self.assertFalse(self.service.is_valid_email("user@"))
+        self.assertFalse(self.email_validator.is_valid_email("user@"))
 
     def test_is_valid_email_returns_true_when_email_is_valid_with_tag(self):
-        self.assertTrue(self.service.is_valid_email("user.name+tag@example.com"))
+        self.assertTrue(self.email_validator.is_valid_email("user.name+tag@example.com"))
 
     def test_is_valid_email_returns_true_when_simple_valid_email(self):
-        self.assertTrue(self.service.is_valid_email("user@example.com"))
+        self.assertTrue(self.email_validator.is_valid_email("user@example.com"))
 
     # -------------------------
     # format_display_name tests
