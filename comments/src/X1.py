@@ -1,7 +1,7 @@
 class X1:
 
     @staticmethod
-    def m(q, z):
+    def sum_of_squares(q, z):
         p = 0
 
         # Iterate from lower bound (q) to upper bound (z)
