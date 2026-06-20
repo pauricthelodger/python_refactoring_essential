@@ -5,14 +5,14 @@ class X1:
         total = 0
 
         # Iterate from lower bound (q) to upper bound (z)
-        for i in range(lower_bound, upper_bound + 1):
+        for num in range(lower_bound, upper_bound + 1):
             # Add square of each number in the range
-            total += X1.square(i)
+            total += X1.square(num)
 
         # Return accumulated sum
         return total
 
     @staticmethod
-    def square(k):
+    def square(num):
         # Return square of input
-        return k * k
+        return num * num
