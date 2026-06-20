@@ -18,7 +18,8 @@ class CustomerService:
 
 class EmailValidator:
 
-    def is_valid_email(self, email: str) -> bool:
+    @staticmethod
+    def is_valid_email(email: str) -> bool:
         if email is None:
             return False
         pattern = r"^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"
